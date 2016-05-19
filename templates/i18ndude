@@ -1,0 +1,3 @@
+#!/bin/bash
+test -e ${buildout:directory}/i18ndude/bin/i18ndude && exec ${buildout:directory}/i18ndude/bin/i18ndude $@
+echo "Run: (cd ${buildout:directory}/i18ndude; make)"

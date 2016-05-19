@@ -1,0 +1,12 @@
+.installed.cfg
+.mr.developer.cfg
+buildout.cfg
+pip-selfcheck.json
+.codeintel/
+bin/
+develop-eggs/
+include/
+lib/
+parts/
+src/
+var/
