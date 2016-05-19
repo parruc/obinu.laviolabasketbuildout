@@ -2,11 +2,15 @@
 .mr.developer.cfg
 buildout.cfg
 pip-selfcheck.json
+secret.cfg
 .codeintel/
 bin/
 develop-eggs/
+eggs/
+etc/
 include/
 lib/
+local/
 parts/
 src/
 var/
