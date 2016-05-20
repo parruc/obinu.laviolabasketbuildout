@@ -11,6 +11,11 @@ help_buildout:
 bootstrap:
 	virtualenv -p python2.7 .
 	bin/pip install zc.buildout
+	apt-get install libpcre3 libpcre3-dev
+
+bootstrap_production:
+	virtualenv -p python2.7 .
+	bin/pip install zc.buildout supervisor superlance
 	apt-get install libpcre3 libpcre3-dev varnish nginx
 
 buildout: buildout.cfg
