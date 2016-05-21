@@ -7,30 +7,30 @@
 # Description:       This file should be used to construct scripts to be
 #                    placed in /etc/init.d.
 ### END INIT INFO
-supervisorctl="${buildout:directory}/bin/supervisorctl -c ${buildout:directory}/etc/supervisord.conf"
-supervisord="${buildout:directory}/bin/supervisord -c ${buildout:directory}/etc/supervisord.conf"
+supervisorctl="${buildout:directory}/bin/supervisorctl"
+supervisord="${buildout:directory}/bin/supervisord"
 name="${settings:projectname}"
 [ -f $supervisord ] || exit 1
 [ -f $supervisorctl ] || exit 1
 RETVAL=0
 start() {
    echo -n "Starting $name: "
-   $supervisord
+   $supervisord  -c ${supervisord.conf:output}
    RETVAL=$?
-   [ $RETVAL -eq 0 ] && touch /var/run/$name
+   [ $RETVAL -eq 0 ] && touch ${supervisord.conf:file}
    echo
    return $RETVAL
 }
 stop() {
    echo -n "Stopping $name: "
-   $supervisorctl shutdown
+   $supervisorctl -c ${supervisord.conf:output} shutdown
    RETVAL=$?
-   [ $RETVAL -eq 0 ] && rm -f /var/run/$name
+   [ $RETVAL -eq 0 ] && rm -f ${supervisord.conf:file}
    echo
    return $RETVAL
 }
 status() {
-  $supervisorctl status
+  $supervisorctl -c ${supervisord.conf:output} status
   RETVAL=$?
   return $RETVAL
 }

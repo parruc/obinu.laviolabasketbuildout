@@ -8,7 +8,7 @@ help_buildout:
 
 # include docs/Makefile
 
-bootstrap:
+bootstrap_development:
 	virtualenv -p python2.7 .
 	bin/pip install zc.buildout
 	apt-get install libpcre3 libpcre3-dev
