@@ -8,15 +8,23 @@ help_buildout:
 
 # include docs/Makefile
 
-bootstrap_development:
+bootstrap_common:
+	mkdir -p eggs
 	virtualenv -p python2.7 .
 	bin/pip install zc.buildout
 	apt-get install libpcre3 libpcre3-dev
 
-bootstrap_production:
-	virtualenv -p python2.7 .
-	bin/pip install zc.buildout supervisor superlance
-	apt-get install libpcre3 libpcre3-dev varnish nginx
+bootstrap_development_specific:
+	ln -sf development.cfg buildout.cfg
+
+bootstrap_production_specific:
+	bin/pip install supervisor superlance
+	apt-get install libpcre3 libpcre3-dev varnish nginx socat
+	ln -sf production.cfg buildout.cfg
+
+bootstrap_production: bootstrap_common bootstrap_production_specific
+
+bootstrap_development: bootstrap_common bootstrap_development_specific
 
 buildout: buildout.cfg
 	bin/buildout -Nvt 2
