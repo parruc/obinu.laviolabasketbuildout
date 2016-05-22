@@ -1,0 +1,36 @@
+# This adds security headers
+add_header X-Frame-Options "SAMEORIGIN";
+add_header Strict-Transport-Security "max-age=15768000; includeSubDomains";
+add_header X-XSS-Protection "1; mode=block";
+add_header X-Content-Type-Options "nosniff";
+#add_header Content-Security-Policy "default-src 'self'; img-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'";
+add_header Content-Security-Policy-Report-Only "default-src 'self'; img-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'";
+
+# This specifies which IP and port Plone is running on.
+# The default is 127.0.0.1:8080
+upstream plone {
+    server 127.0.0.1:${ports:varnish};
+}
+
+# Redirect all www-less traffic to the www.site.com domain
+# (you could also do the opposite www -> non-www domain)
+server {
+    listen 80;
+    server_name www.${nginx:host};
+    rewrite ^/(.*) http://${nginx:host}/$1 permanent;
+}
+
+server {
+
+    listen 80;
+    server_name ${nginx:host};
+    access_log /var/log/nginx/${nginx:host}.access.log;
+    error_log /var/log/nginx/${nginx:host}.error.log;
+
+    # Note that domain name spelling in VirtualHostBase URL matters
+    # -> this is what Plone sees as the "real" HTTP request URL.
+    # "Plone" in the URL is your site id (case sensitive)
+    location / {
+          proxy_pass http://plone/VirtualHostBase/http/${nginx:host}:80/Plone/VirtualHostRoot/;
+    }
+}

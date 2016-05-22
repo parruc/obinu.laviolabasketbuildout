@@ -19,7 +19,7 @@ bootstrap_development_specific:
 
 bootstrap_production_specific:
 	bin/pip install supervisor superlance
-	apt-get install libpcre3 libpcre3-dev varnish nginx socat
+	apt-get install libpcre3 libpcre3-dev varnish nginx socat python-docutils libncurses5-dev libreadline6-dev
 	ln -sf production.cfg buildout.cfg
 	touch secret.cfg
 
