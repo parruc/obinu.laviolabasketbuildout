@@ -31,6 +31,6 @@ server {
     # -> this is what Plone sees as the "real" HTTP request URL.
     # "Plone" in the URL is your site id (case sensitive)
     location / {
-          proxy_pass http://plone/VirtualHostBase/http/${nginx:host}:80/Plone/VirtualHostRoot/;
+          proxy_pass http://plone/VirtualHostBase/http/${nginx:host}:80/violareggiocalabria/VirtualHostRoot/;
     }
 }
