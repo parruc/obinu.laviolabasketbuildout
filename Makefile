@@ -19,7 +19,7 @@ bootstrap_development_specific:
 
 bootstrap_production_specific:
 	bin/pip install supervisor superlance
-	apt-get install libpcre3 libpcre3-dev varnish nginx socat python-docutils libncurses5-dev libreadline6-dev
+	apt-get install libpcre3 libpcre3-dev varnish nginx socat python-docutils libncurses5-dev libreadline6-dev pkg-config
 	ln -sf production.cfg buildout.cfg
 	touch secret.cfg
 
@@ -33,21 +33,21 @@ buildout: buildout.cfg
 stop: stop1 stop2
 stop1:
 	utils/hactl.sh stop 1
-	sleep 20
+	sleep 10
 	bin/supervisorctl stop instance1
 stop2:
 	utils/hactl.sh stop 2
-	sleep 20
+	sleep 10
 	bin/supervisorctl stop instance2
 
 start: start1 start2
 start1:
 	bin/supervisorctl start instance1
-	sleep 60
+	sleep 10
 	bash utils/up.sh instance1 && utils/hactl.sh start 1
 start2:
 	bin/supervisorctl start instance2
-	sleep 30
+	sleep 10
 	bash utils/up.sh instance2 && utils/hactl.sh start 2
 
 restart: restart1 restart2
