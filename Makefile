@@ -9,17 +9,18 @@ help_buildout:
 # include docs/Makefile
 
 bootstrap_common:
-	mkdir -p eggs
+	test -e cache || mkdir cache
+	test -e eggs || mkdir eggs
 	virtualenv -p python2.7 .
 	bin/pip install zc.buildout
-	apt-get install libpcre3 libpcre3-dev
+	sudo apt-get install libpcre3 libpcre3-dev
 
 bootstrap_development_specific:
 	ln -sf development.cfg buildout.cfg
 
 bootstrap_production_specific:
 	bin/pip install supervisor superlance
-	apt-get install libpcre3 libpcre3-dev varnish nginx socat python-docutils libncurses5-dev libreadline6-dev pkg-config
+	sudo apt-get install libpcre3 libpcre3-dev varnish nginx socat python-docutils libncurses5-dev libreadline6-dev pkg-config
 	ln -sf production.cfg buildout.cfg
 	touch secret.cfg
 
