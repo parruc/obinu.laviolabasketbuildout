@@ -31,7 +31,7 @@ bootstrap_development: bootstrap_common bootstrap_development_specific
 buildout: buildout.cfg
 	bin/buildout -Nvt 2
 
-stop: stop1 stop2
+stop: stop1 stop2 stop3
 stop1:
 	utils/hactl.sh stop 1
 	sleep 10
@@ -41,7 +41,11 @@ stop2:
 	sleep 10
 	bin/supervisorctl stop instance2
 
-start: start1 start2
+stop3:
+	utils/hactl.sh stop 3
+	sleep 10
+	bin/supervisorctl stop instance3
+start: start1 start2 start3
 start1:
 	bin/supervisorctl start instance1
 	sleep 10
@@ -51,9 +55,14 @@ start2:
 	sleep 10
 	bash utils/up.sh instance2 && utils/hactl.sh start 2
 
-restart: restart1 restart2
+start3:
+	bin/supervisorctl start instance3
+	sleep 10
+	bash utils/up.sh instance2 && utils/hactl.sh start 3
+restart: restart1 restart2 restart3
 restart1: stop1 start1
 restart2: stop2 start2
+restart3: stop3 start3
 
 status:
 	bin/supervisorctl status
