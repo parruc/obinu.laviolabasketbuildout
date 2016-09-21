@@ -4,7 +4,7 @@ help_buildout:
 	@echo "-----------------------------------------"
 	@echo "  bootstrap  bootstraps the plone project
 	@echo "  buildout   to run buildout"
-	@echo "  restart    to restart instance1/2"
+	@echo "  restart    to restart instance1/2/3"
 
 # include docs/Makefile
 
@@ -45,6 +45,9 @@ stop3:
 	utils/hactl.sh stop 3
 	sleep 10
 	bin/supervisorctl stop instance3
+stopvarnish: 
+	bin/supervisorctl stop varnish
+
 start: start1 start2 start3
 start1:
 	bin/supervisorctl start instance1
@@ -59,10 +62,15 @@ start3:
 	bin/supervisorctl start instance3
 	sleep 10
 	bash utils/up.sh instance2 && utils/hactl.sh start 3
-restart: restart1 restart2 restart3
+startvarnish: 
+	bin/supervisorctl start varnish
+
+restart: restart1 restart2 restart3 restartvarnish
 restart1: stop1 start1
 restart2: stop2 start2
 restart3: stop3 start3
+restartvarnish: stopvarnish startvarnish
+
 
 status:
 	bin/supervisorctl status
