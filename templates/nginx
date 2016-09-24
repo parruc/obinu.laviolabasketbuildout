@@ -3,7 +3,7 @@ add_header X-Frame-Options "SAMEORIGIN";
 add_header Strict-Transport-Security "max-age=15768000; includeSubDomains";
 add_header X-XSS-Protection "1; mode=block";
 add_header X-Content-Type-Options "nosniff";
-add_header Content-Security-Policy "default-src 'self'; img-src *; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com; child-src 'self' https://youtube.com https://www.youtube.com";
+add_header Content-Security-Policy "default-src 'self'; img-src *; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com; child-src 'self' *.youtube.com";
 #add_header Content-Security-Policy-Report-Only "default-src 'self'; img-src *; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'https://maps.googleapis.com; child-src 'self' https://youtube.com https://www.youtube.com";
 
 
